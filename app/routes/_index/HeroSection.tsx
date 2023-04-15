@@ -39,7 +39,7 @@ export function HeroSection() {
                 </p>
                 <div className="mt-6">
                   <Link
-                    to="#"
+                    to="/flowers"
                     className="inline-block rounded-md border border-transparent bg-primary-600 px-8 py-3 font-medium text-white hover:bg-primary-700"
                   >
                     Shop Local Flowers
