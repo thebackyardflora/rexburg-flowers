@@ -4,6 +4,8 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@re
 
 import tailwindStylesheetUrl from '~/tailwind.css';
 import { getUser } from '~/session.server';
+import type { V2_ErrorBoundaryComponent } from '@remix-run/react/dist/routeModules';
+import Route404 from '~/components/Route404';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStylesheetUrl }];
 
@@ -38,3 +40,7 @@ export default function App() {
     </html>
   );
 }
+
+export const ErrorBoundary: V2_ErrorBoundaryComponent = () => {
+  return <Route404 />;
+};
