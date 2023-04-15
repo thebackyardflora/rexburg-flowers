@@ -1,4 +1,5 @@
 import Logo from '~/components/Logo';
+import { Link } from '@remix-run/react';
 
 const footerNavigation = {
   products: [
@@ -41,9 +42,9 @@ export function SiteFooter() {
                   <ul className="mt-6 space-y-6">
                     {footerNavigation.products.map((item) => (
                       <li key={item.name} className="text-sm">
-                        <a href={item.href} className="text-gray-500 hover:text-gray-600">
+                        <Link to={item.href} className="text-gray-500 hover:text-gray-600">
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -53,9 +54,9 @@ export function SiteFooter() {
                   <ul className="mt-6 space-y-6">
                     {footerNavigation.company.map((item) => (
                       <li key={item.name} className="text-sm">
-                        <a href={item.href} className="text-gray-500 hover:text-gray-600">
+                        <Link to={item.href} className="text-gray-500 hover:text-gray-600">
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -66,9 +67,9 @@ export function SiteFooter() {
                 <ul className="mt-6 space-y-6">
                   {footerNavigation.services.map((item) => (
                     <li key={item.name} className="text-sm">
-                      <a href={item.href} className="text-gray-500 hover:text-gray-600">
+                      <Link to={item.href} className="text-gray-500 hover:text-gray-600">
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
