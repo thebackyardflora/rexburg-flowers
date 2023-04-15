@@ -35,6 +35,9 @@ test('has a hero section with the title, image, and call to action', async ({ pa
   await expect(page.getByRole('heading', { name: /Rexburg Grown, Never Flown/ })).toBeVisible();
   await expect(page.getByAltText(/a dahlia flower/i)).toBeVisible();
   await expect(page.getByRole('link', { name: /shop local flowers/i })).toBeVisible();
+
+  await page.getByRole('link', { name: /shop local flowers/i }).click();
+  await page.waitForURL(/\/flowers/);
 });
 
 test('has a footer', async ({ page }) => {
