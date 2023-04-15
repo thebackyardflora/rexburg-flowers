@@ -23,7 +23,12 @@
     "typecheck": "tsc",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
   },
-  "prettier": {},
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "es5",
+    "printWidth": 120
+  },
   "eslintIgnore": [
     "/node_modules",
     "/build",
@@ -31,6 +36,8 @@
     "/postgres-data"
   ],
   "dependencies": {
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.17",
     "@isaacs/express-prometheus-middleware": "^1.2.1",
     "@prisma/client": "^4.11.0",
     "@remix-run/express": "^1.15.0",
@@ -38,6 +45,7 @@
     "@remix-run/react": "^1.15.0",
     "@remix-run/server-runtime": "^1.15.0",
     "bcryptjs": "^2.4.3",
+    "classnames": "^2.3.2",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
@@ -53,6 +61,8 @@
     "@playwright/test": "^1.32.3",
     "@remix-run/dev": "^1.15.0",
     "@remix-run/eslint-config": "^1.15.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.3",
     "@testing-library/dom": "^9.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -65,6 +75,8 @@
     "@types/node": "^18.15.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/coverage-c8": "^0.30.0",
     "autoprefixer": "^10.4.14",
@@ -72,9 +84,10 @@
     "cookie": "^0.5.0",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.11",
-    "eslint": "^8.36.0",
+    "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-playwright": "^0.12.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "happy-dom": "^9.0.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",

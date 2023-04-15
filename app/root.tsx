@@ -1,20 +1,11 @@
-import type { LinksFunction, LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import type { LinksFunction, LoaderArgs } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 
-import tailwindStylesheetUrl from "~/tailwind.css";
-import { getUser } from "~/session.server";
+import tailwindStylesheetUrl from '~/tailwind.css';
+import { getUser } from '~/session.server';
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: tailwindStylesheetUrl },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStylesheetUrl }];
 
 export const loader = async ({ request }: LoaderArgs) => {
   return json({ user: await getUser(request) });
