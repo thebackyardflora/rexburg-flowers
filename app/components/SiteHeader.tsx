@@ -11,22 +11,22 @@ const navigation = {
       name: 'Flowers',
       featured: [
         {
-          name: 'CSA Subscription',
-          href: '#',
-          imageSrc: '/images/csa.png',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
-        },
-        {
           name: 'Bouquets',
-          href: '#',
+          href: '/flowers/bouquets',
           imageSrc: '/images/bouquets-thumbnail.jpg',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
         {
           name: 'Arrangements',
-          href: '#',
+          href: '/flowers/arrangements',
           imageSrc: '/images/arrangements-thumbnail.jpg',
           imageAlt: 'Model wearing minimalist watch with black wristband and white watch face.',
+        },
+        {
+          name: 'CSA Subscription',
+          href: '/flowers/csa',
+          imageSrc: '/images/csa.png',
+          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
       ],
     },
@@ -39,6 +39,10 @@ const navigation = {
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  function handleLinkClick() {
+    setMobileMenuOpen(false);
+  }
 
   return (
     <>
@@ -80,47 +84,30 @@ export function SiteHeader() {
                 </div>
 
                 {/* Links */}
-                <Tab.Group as="div" className="mt-2">
-                  <div>
-                    <Tab.List className="-mb-px flex space-x-8 px-4">
-                      {navigation.categories.map((category) => (
-                        <Tab
-                          key={category.name}
-                          className={({ selected }) =>
-                            classNames(
-                              selected ? 'border-primary text-primary-800' : 'border-transparent text-gray-900',
-                              'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium'
-                            )
-                          }
-                        >
-                          {category.name}
-                        </Tab>
-                      ))}
-                    </Tab.List>
-                  </div>
-                  <Tab.Panels as={Fragment}>
-                    {navigation.categories.map((category) => (
-                      <Tab.Panel key={category.name} className="space-y-12 px-4 py-6">
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-10">
-                          {category.featured.map((item) => (
-                            <div key={item.name} className="group relative">
-                              <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                <img src={item.imageSrc} alt={item.imageAlt} className="object-cover object-center" />
-                              </div>
-                              <Link to={item.href} className="mt-6 block text-sm font-medium text-gray-900">
-                                <span className="absolute inset-0 z-10" aria-hidden="true" />
-                                {item.name}
-                              </Link>
-                              <p aria-hidden="true" className="mt-1 text-sm text-gray-500">
-                                Shop now
-                              </p>
-                            </div>
-                          ))}
+                {navigation.categories.map((category) => (
+                  <div key={category.name} className="space-y-12 px-4 py-6">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-10">
+                      {category.featured.map((item) => (
+                        <div key={item.name} className="group relative">
+                          <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
+                            <img src={item.imageSrc} alt={item.imageAlt} className="object-cover object-center" />
+                          </div>
+                          <Link
+                            to={item.href}
+                            className="mt-6 block text-sm font-medium text-gray-900"
+                            onClick={handleLinkClick}
+                          >
+                            <span className="absolute inset-0 z-10" aria-hidden="true" />
+                            {item.name}
+                          </Link>
+                          <p aria-hidden="true" className="mt-1 text-sm text-gray-500">
+                            Shop now
+                          </p>
                         </div>
-                      </Tab.Panel>
-                    ))}
-                  </Tab.Panels>
-                </Tab.Group>
+                      ))}
+                    </div>
+                  </div>
+                ))}
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   {navigation.pages.map((page) => (
@@ -154,7 +141,7 @@ export function SiteHeader() {
                   <div className="flex h-full justify-center space-x-8">
                     {navigation.categories.map((category) => (
                       <Popover key={category.name} className="flex">
-                        {({ open }) => (
+                        {({ open, close }) => (
                           <>
                             <div className="relative flex">
                               <Popover.Button
@@ -211,7 +198,11 @@ export function SiteHeader() {
                                               className="object-cover object-center"
                                             />
                                           </div>
-                                          <Link to={item.href} className="mt-4 block font-medium text-gray-900">
+                                          <Link
+                                            to={item.href}
+                                            className="mt-4 block font-medium text-gray-900"
+                                            onClick={close}
+                                          >
                                             <span className="absolute inset-0 z-10" aria-hidden="true" />
                                             {item.name}
                                           </Link>
