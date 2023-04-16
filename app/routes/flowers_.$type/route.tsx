@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import classNames from 'classnames';
 import type { LoaderArgs } from '@remix-run/node';
@@ -28,7 +28,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2,
 });
 
-export default function Example() {
+export default function FlowerProductPage() {
   const { product } = useLoaderData<typeof loader>();
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
 
@@ -37,8 +37,12 @@ export default function Example() {
     { id: 2, name: product.currentBreadcrumb, href: product.href },
   ];
 
+  useEffect(() => {
+    setSelectedVariant(product.variants[0]);
+  }, [product]);
+
   return (
-    <div className="bg-white">
+    <div className="bg-white" key={product.name}>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
         {/* Product details */}
         <div className="lg:max-w-lg lg:self-end">

@@ -83,3 +83,16 @@ test.describe('CSA Product Page', () => {
     await expect(page.getByRole('heading', { name: /Flower Care/ })).toBeVisible();
   });
 });
+
+test.describe('Navigating between product pages', () => {
+  test('can navigate from the arrangement page to the bouquet page', async ({ page }) => {
+    await page.goto('http://127.0.0.1:3000/flowers/arrangements');
+    await expect(page.getByRole('heading', { name: /Arrangements/ })).toBeVisible();
+    await expect(page.getByRole('radio', { name: /Bud Vase/ })).toBeChecked();
+    await page.getByRole('button', { name: /Flowers/ }).click();
+    await page.getByTestId('header-flyout-panel').getByRole('link', { name: 'Bouquets' }).click();
+    await expect(page.getByTestId('header-flyout-panel')).toBeHidden();
+    await expect(page.getByRole('heading', { name: /Wrapped Bouquets/ })).toBeVisible();
+    await expect(page.getByRole('radio', { name: /Small/ })).toBeChecked();
+  });
+});
