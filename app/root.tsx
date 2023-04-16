@@ -6,6 +6,8 @@ import tailwindStylesheetUrl from '~/tailwind.css';
 import { getUser } from '~/session.server';
 import type { V2_ErrorBoundaryComponent } from '@remix-run/react/dist/routeModules';
 import Route404 from '~/components/Route404';
+import { SiteHeader } from '~/components/SiteHeader';
+import { SiteFooter } from '~/components/SiteFooter';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStylesheetUrl }];
 
@@ -32,7 +34,13 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
+        <div className="bg-white">
+          <SiteHeader />
+          <main>
+            <Outlet />
+          </main>
+          <SiteFooter />
+        </div>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
