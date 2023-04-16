@@ -51,3 +51,8 @@ test('has a footer', async ({ page }) => {
   await expect(footer.getByRole('textbox', { name: /email address/i })).toBeVisible();
   await expect(footer.getByRole('button', { name: /sign up/i })).toBeVisible();
 });
+
+test('can navigate to the cart', async ({ page }) => {
+  await page.getByRole('link', { name: /view cart/i }).click();
+  await page.waitForURL(/\/cart/);
+});
