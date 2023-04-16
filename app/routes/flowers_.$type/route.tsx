@@ -7,7 +7,7 @@ import { Link, useLoaderData } from '@remix-run/react';
 import { z } from 'zod';
 import { productMap, productTypes } from '~/routes/flowers_.$type/product-map';
 
-export function loader({ params }: LoaderArgs) {
+export async function loader({ params }: LoaderArgs) {
   const type = z.enum(productTypes).safeParse(params.type);
 
   if (!type.success) {
