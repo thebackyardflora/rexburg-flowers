@@ -1,5 +1,5 @@
 import Logo from '~/components/Logo';
-import { Link } from '@remix-run/react';
+import { Link, useFetcher } from '@remix-run/react';
 
 const footerNavigation = {
   products: [
@@ -19,6 +19,8 @@ const footerNavigation = {
 };
 
 export function SiteFooter() {
+  const emailListFetcher = useFetcher();
+
   return (
     <footer aria-labelledby="footer-heading" className="bg-gray-50">
       <h2 id="footer-heading" className="sr-only">
@@ -80,26 +82,38 @@ export function SiteFooter() {
             <div className="mt-12 md:col-span-8 md:col-start-3 md:row-start-2 md:mt-0 lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <h3 className="text-sm font-medium text-gray-900">Sign up for our newsletter</h3>
               <p className="mt-6 text-sm text-gray-500">The latest deals and savings, sent to your inbox weekly.</p>
-              <form className="mt-2 flex sm:max-w-md">
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  type="text"
-                  autoComplete="email"
-                  required
-                  className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
-                />
-                <div className="ml-4 flex-shrink-0">
-                  <button
-                    type="submit"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                  >
-                    Sign up
-                  </button>
+              {emailListFetcher.data?.success ? (
+                <div className="mt-2 flex items-center justify-center rounded-md bg-primary-50 p-2 text-center text-sm font-medium text-primary-600 sm:max-w-md">
+                  <span>Thank you for subscribing! Check your email to confirm your subscription.</span>
                 </div>
-              </form>
+              ) : emailListFetcher.data?.success === false ? (
+                <div className="mt-2 flex items-center justify-center rounded-md bg-red-100 p-2 text-center text-sm font-medium text-red-900 sm:max-w-md">
+                  <span>Hmm... Something went wrong when trying to add you. Please try again later!</span>
+                </div>
+              ) : (
+                <emailListFetcher.Form method="post" action="/api/join-mail-list" className="mt-2 flex sm:max-w-md">
+                  <label htmlFor="email-address" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="email-address"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+                  />
+                  <div className="ml-4 flex-shrink-0">
+                    <button
+                      type="submit"
+                      disabled={emailListFetcher.state === 'submitting'}
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                </emailListFetcher.Form>
+              )}
             </div>
           </div>
         </div>
