@@ -1,0 +1,367 @@
+{
+  "items": [
+    {
+      "type": "ITEM",
+      "id": "Z5GB6QEL2VOMZTPR4JOYH5GI",
+      "updated_at": "2023-04-17T01:08:42.483Z",
+      "created_at": "2023-04-12T19:06:44.627Z",
+      "version": 1681693722483,
+      "is_deleted": false,
+      "present_at_all_locations": false,
+      "present_at_location_ids": [
+        "LZE9KRMENSDKY"
+      ],
+      "absent_at_location_ids": [
+        "L8Y1XSG0QKGHG"
+      ],
+      "item_data": {
+        "name": "CSA Membership",
+        "description": "Only for sale October - February:\nA series of 6 bouquets of garden fresh florals over the course of the growing season (May-September).\nSubscriptions bought over the winter fund my seed and equipment purchases in the off season so I'm able to bring your flowers during the growing season\nI'll let you know when your bouquets are ready to be picked up at the garden on Mother Nature's timeline. (2 spring, 3 summer, and 1 fall).",
+        "is_taxable": true,
+        "visibility": "PRIVATE",
+        "category_id": "4YK2ESTO3KPNSH35IULNGGF5",
+        "variations": [
+          {
+            "type": "ITEM_VARIATION",
+            "id": "O7PFHRRMLKXPENNTR6X53MQT",
+            "updated_at": "2023-04-16T22:31:58.33Z",
+            "created_at": "2023-04-12T19:06:44.627Z",
+            "version": 1681684318330,
+            "is_deleted": false,
+            "present_at_all_locations": false,
+            "present_at_location_ids": [
+              "LZE9KRMENSDKY"
+            ],
+            "absent_at_location_ids": [
+              "L8Y1XSG0QKGHG"
+            ],
+            "item_variation_data": {
+              "item_id": "Z5GB6QEL2VOMZTPR4JOYH5GI",
+              "name": "Regular",
+              "ordinal": 0,
+              "pricing_type": "FIXED_PRICING",
+              "price_money": {
+                "amount": 17500,
+                "currency": "USD"
+              },
+              "location_overrides": [
+                {
+                  "location_id": "LZE9KRMENSDKY",
+                  "track_inventory": false,
+                  "sold_out": true
+                }
+              ],
+              "track_inventory": false,
+              "sellable": true,
+              "stockable": true
+            }
+          }
+        ],
+        "product_type": "REGULAR",
+        "skip_modifier_screen": false,
+        "ecom_uri": "https://the-backyard-flora.square.site/product/csa-membership/3",
+        "ecom_image_uris": [
+          "https://the-backyard-flora.square.site/uploads/1/4/5/3/145336400/s263599081398187798_p3_i2_w600.jpeg"
+        ],
+        "ecom_available": true,
+        "ecom_visibility": "VISIBLE",
+        "image_ids": [
+          "PHQ3OFUNAUPHIXL7ZVN4E7ZL"
+        ],
+        "pickup_fulfillment_preferences_id": "fprefs_127mynnvewvf2fw2jzjix1fdi",
+        "delivery_fulfillment_preferences_id": "fprefs_127mynnvegeqzft4ac9djheza",
+        "description_html": "<p><strong>Only for sale October - February:</strong></p><p>A series of 6 bouquets of garden fresh florals over the course of the growing season (May-September).</p><p>Subscriptions bought over the winter fund my seed and equipment purchases in the off season so I&#39;m able to bring your flowers during the growing season</p><p>I&#39;ll let you know when your bouquets are ready to be picked up at the garden on Mother Nature&#39;s timeline. (2 spring, 3 summer, and 1 fall).</p>",
+        "description_plaintext": "Only for sale October - February:\nA series of 6 bouquets of garden fresh florals over the course of the growing season (May-September).\nSubscriptions bought over the winter fund my seed and equipment purchases in the off season so I'm able to bring your flowers during the growing season\nI'll let you know when your bouquets are ready to be picked up at the garden on Mother Nature's timeline. (2 spring, 3 summer, and 1 fall)."
+      }
+    },
+    {
+      "type": "ITEM",
+      "id": "43UTB5RLJ4CCFWA67YAJXULV",
+      "updated_at": "2023-04-17T00:44:23.962Z",
+      "created_at": "2023-04-12T22:44:29.087Z",
+      "version": 1681692263962,
+      "is_deleted": false,
+      "present_at_all_locations": false,
+      "present_at_location_ids": [
+        "LZE9KRMENSDKY"
+      ],
+      "absent_at_location_ids": [
+        "L8Y1XSG0QKGHG"
+      ],
+      "item_data": {
+        "name": "Gardener's Choice Arrangement",
+        "description": "A vase full of in season garden fresh flowers. They'll be harvested per order at the the right stage to give you the longest vase life possible.",
+        "is_taxable": true,
+        "visibility": "PRIVATE",
+        "category_id": "UQARB7JXE4W3LI4UREUOUR6F",
+        "variations": [
+          {
+            "type": "ITEM_VARIATION",
+            "id": "BIV55AGN3XETIF7QRUXWVW2L",
+            "updated_at": "2023-04-16T22:33:12.404Z",
+            "created_at": "2023-04-12T22:44:29.087Z",
+            "version": 1681684392404,
+            "is_deleted": false,
+            "present_at_all_locations": false,
+            "present_at_location_ids": [
+              "LZE9KRMENSDKY"
+            ],
+            "absent_at_location_ids": [
+              "L8Y1XSG0QKGHG"
+            ],
+            "item_variation_data": {
+              "item_id": "43UTB5RLJ4CCFWA67YAJXULV",
+              "name": "Regular",
+              "ordinal": 0,
+              "pricing_type": "FIXED_PRICING",
+              "price_money": {
+                "amount": 4000,
+                "currency": "USD"
+              },
+              "location_overrides": [
+                {
+                  "location_id": "LZE9KRMENSDKY",
+                  "track_inventory": false
+                }
+              ],
+              "track_inventory": false,
+              "sellable": true,
+              "stockable": true
+            }
+          }
+        ],
+        "product_type": "REGULAR",
+        "skip_modifier_screen": false,
+        "ecom_uri": "https://the-backyard-flora.square.site/product/gardener-s-choice-arrangement/5",
+        "ecom_image_uris": [
+          "https://the-backyard-flora.square.site/uploads/1/4/5/3/145336400/s263599081398187798_p5_i1_w400.jpeg"
+        ],
+        "ecom_available": true,
+        "ecom_visibility": "VISIBLE",
+        "image_ids": [
+          "46FYBIO7JUM264GXKYIFTNUN"
+        ],
+        "pickup_fulfillment_preferences_id": "fprefs_127mx4mm5rra84lo9yqopdbk9",
+        "delivery_fulfillment_preferences_id": "fprefs_127mynp71ydq9klqii1vmwxqh",
+        "description_html": "A vase full of in season garden fresh flowers. They&#39;ll be harvested per order at the the right stage to give you the longest vase life possible.",
+        "description_plaintext": "A vase full of in season garden fresh flowers. They'll be harvested per order at the the right stage to give you the longest vase life possible.",
+        "shipping_fulfillment_preferences_id": "fprefs_127mtwci65odyxsjfhkzdko51"
+      }
+    },
+    {
+      "type": "ITEM",
+      "id": "GJQWDAL2GUS7A77VLPXK6UHZ",
+      "updated_at": "2023-04-17T01:15:35.285Z",
+      "created_at": "2023-04-16T16:31:57.265Z",
+      "version": 1681694135285,
+      "is_deleted": false,
+      "present_at_all_locations": false,
+      "present_at_location_ids": [
+        "LZE9KRMENSDKY"
+      ],
+      "absent_at_location_ids": [
+        "L8Y1XSG0QKGHG"
+      ],
+      "item_data": {
+        "name": "Gardener's Choice Bouquet",
+        "description": "A wrapped bouquet using the current in-season flowers.",
+        "is_taxable": true,
+        "visibility": "PRIVATE",
+        "category_id": "UQARB7JXE4W3LI4UREUOUR6F",
+        "variations": [
+          {
+            "type": "ITEM_VARIATION",
+            "id": "JFTIHLSPG32QUKJ6MT2GZMOJ",
+            "updated_at": "2023-04-17T01:15:35.285Z",
+            "created_at": "2023-04-16T16:31:57.265Z",
+            "version": 1681694135285,
+            "is_deleted": false,
+            "custom_attribute_values": {
+              "Square:747cbba5-3543-41eb-9734-1184a43ffbfc": {
+                "name": "Description",
+                "string_value": "About 5 stems",
+                "custom_attribute_definition_id": "K4I22ZEP4S4IXDHJZ2MYGUBX",
+                "type": "STRING",
+                "key": "Square:747cbba5-3543-41eb-9734-1184a43ffbfc"
+              }
+            },
+            "present_at_all_locations": false,
+            "present_at_location_ids": [
+              "LZE9KRMENSDKY"
+            ],
+            "absent_at_location_ids": [
+              "L8Y1XSG0QKGHG"
+            ],
+            "item_variation_data": {
+              "item_id": "GJQWDAL2GUS7A77VLPXK6UHZ",
+              "name": "Small",
+              "sku": "bouquet-sm",
+              "ordinal": 0,
+              "pricing_type": "FIXED_PRICING",
+              "price_money": {
+                "amount": 2000,
+                "currency": "USD"
+              },
+              "location_overrides": [
+                {
+                  "location_id": "LZE9KRMENSDKY",
+                  "track_inventory": false
+                }
+              ],
+              "track_inventory": false,
+              "item_option_values": [
+                {
+                  "item_option_id": "YV5RC5QJRPY4G76FRZMMLGAR",
+                  "item_option_value_id": "QC2QIWRMHBRGGQL3G4NR3DGL"
+                }
+              ],
+              "sellable": true,
+              "stockable": true,
+              "image_ids": [
+                "BP3R23TXUEAF57XCUMIECZIF"
+              ]
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "E37PYABWZ44U73ZVK5DIPHNR",
+            "updated_at": "2023-04-17T01:15:35.285Z",
+            "created_at": "2023-04-16T16:31:57.265Z",
+            "version": 1681694135285,
+            "is_deleted": false,
+            "custom_attribute_values": {
+              "Square:747cbba5-3543-41eb-9734-1184a43ffbfc": {
+                "name": "Description",
+                "string_value": "About 10 Stems",
+                "custom_attribute_definition_id": "K4I22ZEP4S4IXDHJZ2MYGUBX",
+                "type": "STRING",
+                "key": "Square:747cbba5-3543-41eb-9734-1184a43ffbfc"
+              }
+            },
+            "present_at_all_locations": false,
+            "present_at_location_ids": [
+              "LZE9KRMENSDKY"
+            ],
+            "absent_at_location_ids": [
+              "L8Y1XSG0QKGHG"
+            ],
+            "item_variation_data": {
+              "item_id": "GJQWDAL2GUS7A77VLPXK6UHZ",
+              "name": "Medium",
+              "sku": "bouquet-md",
+              "ordinal": 1,
+              "pricing_type": "FIXED_PRICING",
+              "price_money": {
+                "amount": 4000,
+                "currency": "USD"
+              },
+              "location_overrides": [
+                {
+                  "location_id": "LZE9KRMENSDKY",
+                  "track_inventory": false
+                }
+              ],
+              "track_inventory": false,
+              "item_option_values": [
+                {
+                  "item_option_id": "YV5RC5QJRPY4G76FRZMMLGAR",
+                  "item_option_value_id": "2AHXLZZJTUMKSGOPQQMTBNEQ"
+                }
+              ],
+              "sellable": true,
+              "stockable": true,
+              "image_ids": [
+                "DJGLUQPKX6IUX7DIK5W4GRU4"
+              ]
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "JUWQFTGTSADAOOPER4572BZK",
+            "updated_at": "2023-04-17T01:15:35.285Z",
+            "created_at": "2023-04-16T16:31:57.265Z",
+            "version": 1681694135285,
+            "is_deleted": false,
+            "custom_attribute_values": {
+              "Square:747cbba5-3543-41eb-9734-1184a43ffbfc": {
+                "name": "Description",
+                "string_value": "About 15 Stems",
+                "custom_attribute_definition_id": "K4I22ZEP4S4IXDHJZ2MYGUBX",
+                "type": "STRING",
+                "key": "Square:747cbba5-3543-41eb-9734-1184a43ffbfc"
+              }
+            },
+            "present_at_all_locations": false,
+            "present_at_location_ids": [
+              "LZE9KRMENSDKY"
+            ],
+            "absent_at_location_ids": [
+              "L8Y1XSG0QKGHG"
+            ],
+            "item_variation_data": {
+              "item_id": "GJQWDAL2GUS7A77VLPXK6UHZ",
+              "name": "Large",
+              "sku": "bouquet-lg",
+              "ordinal": 2,
+              "pricing_type": "FIXED_PRICING",
+              "price_money": {
+                "amount": 6000,
+                "currency": "USD"
+              },
+              "location_overrides": [
+                {
+                  "location_id": "LZE9KRMENSDKY",
+                  "track_inventory": false
+                }
+              ],
+              "track_inventory": false,
+              "item_option_values": [
+                {
+                  "item_option_id": "YV5RC5QJRPY4G76FRZMMLGAR",
+                  "item_option_value_id": "AYRAVJEWFXHSSMO3VJDIVZA2"
+                }
+              ],
+              "sellable": true,
+              "stockable": true,
+              "image_ids": [
+                "B53ZTIERIJUUID5N7VAAZ7HT"
+              ]
+            }
+          }
+        ],
+        "product_type": "REGULAR",
+        "skip_modifier_screen": false,
+        "item_options": [
+          {
+            "item_option_id": "YV5RC5QJRPY4G76FRZMMLGAR"
+          }
+        ],
+        "ecom_uri": "https://the-backyard-flora.square.site/product/gardener-s-choice-bouquet/6",
+        "ecom_image_uris": [
+          "https://the-backyard-flora.square.site/uploads/1/4/5/3/145336400/s263599081398187798_p6_i4_w400.jpeg",
+          "https://the-backyard-flora.square.site/uploads/1/4/5/3/145336400/s263599081398187798_p6_i5_w600.jpeg",
+          "https://the-backyard-flora.square.site/uploads/1/4/5/3/145336400/s263599081398187798_p6_i6_w600.jpeg",
+          "https://the-backyard-flora.square.site/uploads/1/4/5/3/145336400/s263599081398187798_p6_i7_w600.jpeg"
+        ],
+        "ecom_available": true,
+        "ecom_visibility": "VISIBLE",
+        "image_ids": [
+          "UJ6G3HMM5BWDRZGEPUKJWQFH"
+        ],
+        "pickup_fulfillment_preferences_id": "fprefs_127mycy06m7f6g2mpr8ecb8hc",
+        "delivery_fulfillment_preferences_id": "fprefs_127mycy05p9tbzpsdyuxmpv3k",
+        "description_html": "<p>A wrapped bouquet using the current in-season flowers.</p>",
+        "description_plaintext": "A wrapped bouquet using the current in-season flowers.",
+        "dine_in_fulfillment_preferences_id": "fprefs_127mycy065hlag5uge7srryr4"
+      }
+    }
+  ],
+  "cursor": "",
+  "matched_variation_ids": [
+    "O7PFHRRMLKXPENNTR6X53MQT",
+    "BIV55AGN3XETIF7QRUXWVW2L",
+    "JFTIHLSPG32QUKJ6MT2GZMOJ",
+    "E37PYABWZ44U73ZVK5DIPHNR",
+    "JUWQFTGTSADAOOPER4572BZK"
+  ]
+}

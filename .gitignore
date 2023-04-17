@@ -5,6 +5,7 @@ node_modules
 .env
 
 /postgres-data
+/redis-data
 
 /test-results/
 /playwright-report/

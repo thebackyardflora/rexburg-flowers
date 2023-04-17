@@ -5,16 +5,16 @@ import type { LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { z } from 'zod';
-import { productMap, productTypes } from '~/routes/flowers_.$type/product-map';
+import { getProducts } from '~/models/product.server';
 
 export async function loader({ params }: LoaderArgs) {
-  const type = z.enum(productTypes).safeParse(params.type);
+  const id = z.string().parse(params.id);
+  const products = await getProducts();
+  const product = products.find((product) => product.id === id);
 
-  if (!type.success) {
+  if (!product) {
     throw new Response(null, { status: 404 });
   }
-
-  const product = productMap[type.data];
 
   return json({
     product,
@@ -33,8 +33,8 @@ export default function FlowerProductPage() {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
 
   const breadcrumbs = [
-    { id: 1, name: 'Flowers', href: '/flowers' },
-    { id: 2, name: product.currentBreadcrumb, href: product.href },
+    { id: 1, name: 'Products', href: '/products' },
+    { id: 2, name: product.name, href: product.href },
   ];
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function FlowerProductPage() {
         {/* Product details */}
         <div className="lg:max-w-lg lg:self-end">
           <nav aria-label="Breadcrumb">
-            <ol role="list" className="flex items-center space-x-2">
+            <ol className="flex items-center space-x-2">
               {breadcrumbs.map((breadcrumb, breadcrumbIdx) => (
                 <li key={breadcrumb.id}>
                   <div className="flex items-center text-sm">
@@ -78,11 +78,15 @@ export default function FlowerProductPage() {
         {/* Product image */}
         <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
           <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
-            <img
-              src={selectedVariant.imageSrc}
-              alt={selectedVariant.imageAlt}
-              className="h-full w-full object-cover object-center"
-            />
+            {selectedVariant.imageSrc ? (
+              <img
+                src={selectedVariant.imageSrc}
+                alt={selectedVariant.imageAlt}
+                className="h-full w-full object-cover object-center"
+              />
+            ) : product.imageSrc ? (
+              <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center" />
+            ) : null}
           </div>
         </div>
 
@@ -151,9 +155,9 @@ export default function FlowerProductPage() {
             Product information
           </h2>
 
-          <div className="mt-4 space-y-6">
-            <p className="text-base text-gray-500">{product.description}</p>
-          </div>
+          {product.descriptionHtml ? (
+            <div className="prose mt-4 space-y-6" dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+          ) : null}
 
           <div className="mt-8 border-t border-gray-200 pt-8">
             <h2 className="text-sm font-medium text-gray-900">Flower Care</h2>

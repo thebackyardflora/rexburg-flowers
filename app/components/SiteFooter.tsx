@@ -1,25 +1,26 @@
 import Logo from '~/components/Logo';
 import { Link, useFetcher } from '@remix-run/react';
-
-const footerNavigation = {
-  products: [
-    { name: 'CSA Subscription', href: '#' },
-    { name: 'Bouquets', href: '#' },
-    { name: 'Arrangements', href: '#' },
-  ],
-  company: [
-    { name: 'Who we are', href: '#' },
-    { name: 'No-till farming', href: '#' },
-    { name: 'Contact', href: '#' },
-  ],
-  services: [
-    { name: 'DIY Weddings', href: '#' },
-    { name: 'The Flower Cart', href: '#' },
-  ],
-};
+import { useRootLoaderData } from '~/root';
 
 export function SiteFooter() {
   const emailListFetcher = useFetcher();
+  const { featuredProducts } = useRootLoaderData();
+
+  const footerNavigation = {
+    products: featuredProducts.map((product) => ({
+      name: product.name,
+      href: `/products/${product.id}`,
+    })),
+    company: [
+      { name: 'Who we are', href: '#' },
+      { name: 'No-till farming', href: '#' },
+      { name: 'Contact', href: '#' },
+    ],
+    services: [
+      { name: 'DIY Weddings', href: '#' },
+      { name: 'The Flower Cart', href: '#' },
+    ],
+  };
 
   return (
     <footer aria-labelledby="footer-heading" className="bg-gray-50">
