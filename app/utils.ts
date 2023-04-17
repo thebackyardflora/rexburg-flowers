@@ -64,3 +64,8 @@ export function useUser(): User {
 export function validateEmail(email: unknown): email is string {
   return typeof email === 'string' && email.length > 3 && email.includes('@');
 }
+
+export function roundToDecimal(value: number, decimalPlaces: number) {
+  const factor = 10 ** decimalPlaces;
+  return Math.round(value * factor) / factor;
+}

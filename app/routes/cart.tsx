@@ -1,4 +1,5 @@
 import { QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid';
+import { Link } from '@remix-run/react';
 
 const products = [
   {
@@ -47,7 +48,7 @@ export default function ShoppingCart() {
               Items in your shopping cart
             </h2>
 
-            <ul role="list" className="divide-y divide-gray-200 border-b border-t border-gray-200">
+            <ul className="divide-y divide-gray-200 border-b border-t border-gray-200">
               {products.map((product, productIdx) => (
                 <li key={product.id} className="flex py-6 sm:py-10">
                   <div className="flex-shrink-0">
@@ -127,20 +128,20 @@ export default function ShoppingCart() {
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="flex items-center text-sm text-gray-600">
                   <span>Shipping estimate</span>
-                  <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                  <Link to="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Learn more about how shipping is calculated</span>
                     <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-                  </a>
+                  </Link>
                 </dt>
                 <dd className="text-sm font-medium text-gray-900">$5.00</dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="flex text-sm text-gray-600">
                   <span>Tax estimate</span>
-                  <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                  <Link to="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Learn more about how tax is calculated</span>
                     <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-                  </a>
+                  </Link>
                 </dt>
                 <dd className="text-sm font-medium text-gray-900">$8.32</dd>
               </div>

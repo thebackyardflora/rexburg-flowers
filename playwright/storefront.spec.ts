@@ -26,9 +26,9 @@ test('flowers button in header opens the flowers menu', async ({ page }) => {
   await expect(headerFlyoutPanel).toBeHidden();
   await header.getByRole('button', { name: /flowers/i }).click();
   await expect(headerFlyoutPanel).toBeVisible();
-  await expect(headerFlyoutPanel.getByRole('link', { name: /csa subscription/i })).toBeVisible();
-  await expect(headerFlyoutPanel.getByRole('link', { name: /bouquets/i })).toBeVisible();
-  await expect(headerFlyoutPanel.getByRole('link', { name: /arrangements/i })).toBeVisible();
+  await expect(headerFlyoutPanel.getByRole('link', { name: /csa membership/i })).toBeVisible();
+  await expect(headerFlyoutPanel.getByRole('link', { name: /bouquet/i })).toBeVisible();
+  await expect(headerFlyoutPanel.getByRole('link', { name: /arrangement/i })).toBeVisible();
 });
 
 test('has a hero section with the title, image, and call to action', async ({ page }) => {
@@ -37,7 +37,7 @@ test('has a hero section with the title, image, and call to action', async ({ pa
   await expect(page.getByRole('link', { name: /shop local flowers/i })).toBeVisible();
 
   await page.getByRole('link', { name: /shop local flowers/i }).click();
-  await page.waitForURL(/\/flowers/);
+  await page.waitForURL(/\/products/);
 });
 
 test('has a footer', async ({ page }) => {

@@ -1,6 +1,6 @@
-import type { LinksFunction, LoaderArgs, V2_MetaFunction } from '@remix-run/node';
+import type { LinksFunction, LoaderArgs, SerializeFrom, V2_MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useRouteLoaderData } from '@remix-run/react';
 
 import tailwindStylesheetUrl from '~/tailwind.css';
 import { getUser } from '~/session.server';
@@ -8,11 +8,14 @@ import type { V2_ErrorBoundaryComponent } from '@remix-run/react/dist/routeModul
 import Route404 from '~/components/Route404';
 import { SiteHeader } from '~/components/SiteHeader';
 import { SiteFooter } from '~/components/SiteFooter';
+import { getFeaturedProducts } from '~/models/product.server';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStylesheetUrl }];
 
 export const loader = async ({ request }: LoaderArgs) => {
-  return json({ user: await getUser(request) });
+  const featuredProducts = await getFeaturedProducts();
+
+  return json({ user: await getUser(request), featuredProducts });
 };
 
 export const meta: V2_MetaFunction = () => [
@@ -52,3 +55,11 @@ export default function App() {
 export const ErrorBoundary: V2_ErrorBoundaryComponent = () => {
   return <Route404 />;
 };
+
+export function useRootLoaderData() {
+  const loaderData = useRouteLoaderData('root') as SerializeFrom<typeof loader>;
+
+  if (!loaderData) throw new Error('Root Loader data is missing');
+
+  return loaderData;
+}
