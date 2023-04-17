@@ -1,20 +1,20 @@
 import { loader } from './route';
 import type { LoaderArgs } from '@remix-run/node';
-import { getProducts } from '~/models/product.server';
+import { getProductById } from '~/models/product.server';
 
 vi.mock('~/models/product.server', () => ({
-  getProducts: vi.fn(),
+  getProductById: vi.fn(),
 }));
 
-const mockedGetProducts = vi.mocked(getProducts);
+const mockedGetProductById = vi.mocked(getProductById);
 
 describe('FlowersTypeRoute', () => {
   beforeEach(() => {
-    mockedGetProducts.mockClear();
+    mockedGetProductById.mockClear();
   });
 
   test('the loader throws a 404 if the product does not exist', async () => {
-    mockedGetProducts.mockResolvedValueOnce([]);
+    mockedGetProductById.mockResolvedValueOnce(null);
 
     await expect(loader({ params: { id: 'invalid' } } as unknown as LoaderArgs)).rejects.toSatisfy((res) => {
       if (res instanceof Response) {

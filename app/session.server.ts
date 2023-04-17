@@ -1,8 +1,6 @@
 import { createCookieSessionStorage, redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
-
-import type { User } from '~/models/user.server';
-import { getUserById } from '~/models/user.server';
+import type { Cart } from '~/routes/cart/cart.types';
 
 invariant(process.env.SESSION_SECRET, 'SESSION_SECRET must be set');
 
@@ -17,72 +15,43 @@ export const sessionStorage = createCookieSessionStorage({
   },
 });
 
-const USER_SESSION_KEY = 'userId';
+const CART_SESSION_KEY = 'cart';
 
 export async function getSession(request: Request) {
   const cookie = request.headers.get('Cookie');
   return sessionStorage.getSession(cookie);
 }
 
-export async function getUserId(request: Request): Promise<User['id'] | undefined> {
+export async function getCart(request: Request) {
   const session = await getSession(request);
-  const userId = session.get(USER_SESSION_KEY);
-  return userId;
+  const cart = session.get(CART_SESSION_KEY);
+
+  if (!cart) return null;
+
+  return JSON.parse(cart) as Cart;
 }
 
-export async function getUser(request: Request) {
-  const userId = await getUserId(request);
-  if (userId === undefined) return null;
-
-  const user = await getUserById(userId);
-  if (user) return user;
-
-  throw await logout(request);
-}
-
-export async function requireUserId(request: Request, redirectTo: string = new URL(request.url).pathname) {
-  const userId = await getUserId(request);
-  if (!userId) {
-    const searchParams = new URLSearchParams([['redirectTo', redirectTo]]);
-    throw redirect(`/login?${searchParams}`);
-  }
-  return userId;
-}
-
-export async function requireUser(request: Request) {
-  const userId = await requireUserId(request);
-
-  const user = await getUserById(userId);
-  if (user) return user;
-
-  throw await logout(request);
-}
-
-export async function createUserSession({
+export async function saveCartSession({
   request,
-  userId,
-  remember,
+  cart,
   redirectTo,
 }: {
   request: Request;
-  userId: string;
-  remember: boolean;
+  cart: Cart;
   redirectTo: string;
 }) {
   const session = await getSession(request);
-  session.set(USER_SESSION_KEY, userId);
+  session.set(CART_SESSION_KEY, JSON.stringify(cart));
   return redirect(redirectTo, {
     headers: {
       'Set-Cookie': await sessionStorage.commitSession(session, {
-        maxAge: remember
-          ? 60 * 60 * 24 * 7 // 7 days
-          : undefined,
+        maxAge: 60 * 60 * 24 * 7,
       }),
     },
   });
 }
 
-export async function logout(request: Request) {
+export async function clearCartSession(request: Request) {
   const session = await getSession(request);
   return redirect('/', {
     headers: {
