@@ -46,7 +46,7 @@ async function setProductsToCache(items: Product[]) {
   await redisClient.set('catalog-items', JSON.stringify(items));
 }
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   href: string;
