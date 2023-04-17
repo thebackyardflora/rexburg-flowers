@@ -78,9 +78,6 @@ export function SiteHeader() {
                           <span className="absolute inset-0 z-10" aria-hidden="true" />
                           {item.name}
                         </Link>
-                        <p aria-hidden="true" className="mt-1 text-sm text-gray-500">
-                          Shop now
-                        </p>
                       </div>
                     ))}
                   </div>
@@ -184,9 +181,6 @@ export function SiteHeader() {
                                           <span className="absolute inset-0 z-10" aria-hidden="true" />
                                           {item.name}
                                         </Link>
-                                        <p aria-hidden="true" className="mt-1">
-                                          Shop now
-                                        </p>
                                       </div>
                                     ))}
                                   </div>
