@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import classNames from 'classnames';
-import type { LoaderArgs } from '@remix-run/node';
+import type { ActionArgs, LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Form, Link, useLoaderData } from '@remix-run/react';
 import { z } from 'zod';
-import { getProducts } from '~/models/product.server';
+import { getProductById } from '~/models/product.server';
+import { saveCartSession, getCart } from '~/session.server';
+import type { Cart } from '~/routes/cart/cart.types';
 
 export async function loader({ params }: LoaderArgs) {
-  const id = z.string().parse(params.id);
-  const products = await getProducts();
-  const product = products.find((product) => product.id === id);
+  const productId = z.string().parse(params.id);
+  const product = await getProductById(productId);
 
   if (!product) {
     throw new Response(null, { status: 404 });
@@ -19,6 +20,49 @@ export async function loader({ params }: LoaderArgs) {
   return json({
     product,
   });
+}
+
+export async function action({ request, params }: ActionArgs) {
+  if (request.method !== 'POST') {
+    throw new Response(null, { status: 405 });
+  }
+
+  const productId = z.string().parse(params.id);
+  const product = await getProductById(productId);
+
+  if (!product) {
+    throw new Response(null, { status: 404 });
+  }
+
+  const body = await request.formData();
+  const variantId = z.string().parse(body.get('variation[id]'));
+  const variant = product.variants.find((variant) => variant.id === variantId);
+
+  if (!variant) {
+    throw new Response(null, { status: 400 });
+  }
+
+  let cart = await getCart(request);
+
+  if (!cart) {
+    cart = {
+      items: [],
+    } satisfies Cart;
+  }
+
+  const existingItem = cart.items.find((item) => item.productId === product.id && item.variationId === variant.id);
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cart.items.push({
+      productId: product.id,
+      variationId: variant.id,
+      quantity: 1,
+    });
+  }
+
+  return await saveCartSession({ cart, redirectTo: `/cart`, request });
 }
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -97,10 +141,10 @@ export default function FlowerProductPage() {
               Product options
             </h2>
 
-            <form>
+            <Form method="post">
               <div className="sm:flex sm:justify-between">
                 {/* Size selector */}
-                <RadioGroup value={selectedVariant} onChange={setSelectedVariant}>
+                <RadioGroup value={selectedVariant} onChange={setSelectedVariant} name="variation">
                   <RadioGroup.Label className="block text-sm font-medium text-gray-700">Size</RadioGroup.Label>
                   <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {product.variants.map((variant) => (
@@ -146,7 +190,7 @@ export default function FlowerProductPage() {
                   Add to cart
                 </button>
               </div>
-            </form>
+            </Form>
           </section>
         </div>
 

@@ -17,6 +17,12 @@ export async function getProducts() {
   return products;
 }
 
+export async function getProductById(id: string) {
+  const products = await getProducts();
+
+  return products.find((product) => product.id === id) ?? null;
+}
+
 export async function getFeaturedProducts() {
   const products = await getProducts();
 
@@ -49,6 +55,7 @@ type Product = {
   description: string;
   descriptionHtml: string;
   variants: {
+    id: string;
     name: string;
     description: string | null;
     imageSrc: string | null;
@@ -79,13 +86,14 @@ function convertCatalogItemToProduct(item: CatalogItemObject, imageMap: Record<s
   return {
     id: item.id,
     name: productName,
-    href: `/flowers/${item.id}`,
+    href: `/products/${item.id}`,
     imageSrc: getImageUrl(imageIds?.[0], imageMap),
     imageAlt: productName,
     description: descriptionPlaintext ?? '',
     descriptionHtml: descriptionHtml ?? '',
     variants:
       variations?.map((variation) => ({
+        id: variation.id,
         name: variation.itemVariationData?.name ?? 'Untitled',
         description: getCustomAttributeByName(variation.customAttributeValues, 'Description')?.stringValue ?? null,
         imageSrc: getImageUrl(variation.itemVariationData?.imageIds?.[0], imageMap),

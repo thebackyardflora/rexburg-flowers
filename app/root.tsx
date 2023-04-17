@@ -3,19 +3,24 @@ import { json } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useRouteLoaderData } from '@remix-run/react';
 
 import tailwindStylesheetUrl from '~/tailwind.css';
-import { getUser } from '~/session.server';
 import type { V2_ErrorBoundaryComponent } from '@remix-run/react/dist/routeModules';
 import Route404 from '~/components/Route404';
 import { SiteHeader } from '~/components/SiteHeader';
 import { SiteFooter } from '~/components/SiteFooter';
 import { getFeaturedProducts } from '~/models/product.server';
+import { getCart } from '~/session.server';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStylesheetUrl }];
 
 export const loader = async ({ request }: LoaderArgs) => {
-  const featuredProducts = await getFeaturedProducts();
+  const cart = await getCart(request);
 
-  return json({ user: await getUser(request), featuredProducts });
+  const cartQty = cart?.items.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
+
+  return json({
+    cartQty,
+    featuredProducts: await getFeaturedProducts(),
+  });
 };
 
 export const meta: V2_MetaFunction = () => [
