@@ -1,14 +1,14 @@
-import type { CatalogItem } from 'square';
+import type { CatalogItem, OrderLineItem } from 'square';
 import { ApiError, Client, Environment } from 'square';
 import invariant from 'tiny-invariant';
 import type { CatalogObject } from 'square/src/models/catalogObject';
 
 const client = new Client({
   accessToken: process.env.SQUARE_ACCESS_TOKEN,
-  environment: Environment.Production, // process.env.NODE_ENV === 'production' ? Environment.Production : Environment.Sandbox,
+  environment: process.env.NODE_ENV === 'production' ? Environment.Production : Environment.Sandbox,
 });
 
-const { catalogApi } = client;
+const { catalogApi, checkoutApi, ordersApi, paymentsApi } = client;
 
 export async function getLocationCatalogItems() {
   invariant(process.env.SQUARE_LOCATION_ID, 'SQUARE_LOCATION_ID is required');
@@ -58,5 +58,81 @@ export async function getAllImages(ids: string[]) {
       console.log('Unexpected error occurred: ', error);
     }
     throw new Error('Unable to fetch products from Square');
+  }
+}
+
+export async function createCheckoutUrl(origin: string, lineItems: OrderLineItem[]) {
+  invariant(process.env.SQUARE_LOCATION_ID, 'SQUARE_LOCATION_ID is required');
+
+  try {
+    const response = await checkoutApi.createPaymentLink({
+      order: {
+        locationId: process.env.SQUARE_LOCATION_ID,
+        source: {
+          name: 'rexburgflowers.com',
+        },
+        lineItems,
+      },
+      checkoutOptions: {
+        redirectUrl: `${origin}/checkout/callback`,
+      },
+    });
+
+    const url = response.result.paymentLink?.url ?? null;
+
+    if (!url) {
+      throw new Error('Unable to create square payment link');
+    }
+
+    return url;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      error.result.errors.forEach(function (e: any) {
+        console.log(e.category);
+        console.log(e.code);
+        console.log(e.detail);
+      });
+    } else {
+      console.log('Unexpected error occurred: ', error);
+    }
+    throw new Error('Unable to create square payment link');
+  }
+}
+
+export async function getOrder(orderId: string) {
+  try {
+    const order = await ordersApi.retrieveOrder(orderId);
+
+    return order.result.order ?? null;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      error.result.errors.forEach(function (e: any) {
+        console.log(e.category);
+        console.log(e.code);
+        console.log(e.detail);
+      });
+    } else {
+      console.log('Unexpected error occurred: ', error);
+    }
+    throw new Error('Unable to fetch order from Square');
+  }
+}
+
+export async function getPayment(paymentId: string) {
+  try {
+    const payment = await paymentsApi.getPayment(paymentId);
+
+    return payment.result.payment ?? null;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      error.result.errors.forEach(function (e: any) {
+        console.log(e.category);
+        console.log(e.code);
+        console.log(e.detail);
+      });
+    } else {
+      console.log('Unexpected error occurred: ', error);
+    }
+    throw new Error('Unable to fetch payment from Square');
   }
 }

@@ -2,6 +2,8 @@ import { getCart, saveCartSession } from '~/session.server';
 import { getProductById } from '~/models/product.server';
 import { z } from 'zod';
 import type { Cart } from '~/routes/cart/cart.types';
+import { createCheckoutUrl } from '~/square.server';
+import { redirect } from '@remix-run/node';
 
 export async function removeCartItem({ request }: { request: Request }) {
   const cart = await getCart(request);
@@ -90,4 +92,24 @@ export async function addCartItem(request: Request, productId: string) {
   }
 
   return await saveCartSession({ cart, redirectTo: `/cart`, request });
+}
+
+export async function cartCheckout(request: Request) {
+  const cart = await getCart(request);
+
+  if (!cart) {
+    throw new Response(null, { status: 406 });
+  }
+
+  const url = new URL(request.url);
+
+  const checkoutUrl = await createCheckoutUrl(
+    url.origin,
+    cart.items.map((item) => ({
+      quantity: item.quantity.toString(),
+      catalogObjectId: item.variationId,
+    }))
+  );
+
+  return redirect(checkoutUrl);
 }
