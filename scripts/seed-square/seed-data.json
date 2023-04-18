@@ -1,0 +1,297 @@
+{
+  "#Sales Tax": {
+    "data": {
+      "type": "TAX",
+      "id": "#Sales Tax",
+      "isDeleted": false,
+      "presentAtAllLocations": true,
+      "taxData": {
+        "name": "Sales Tax",
+        "calculationPhase": "TAX_TOTAL_PHASE",
+        "inclusionType": "ADDITIVE",
+        "percentage": "6.0",
+        "appliesToCustomAmounts": true,
+        "enabled": true
+      }
+    }
+  },
+  "#Flowers Category": {
+    "data": {
+      "type": "CATEGORY",
+      "id": "#Flowers Category",
+      "presentAtAllLocations": true,
+      "categoryData": {
+        "name": "Flowers"
+      }
+    }
+  },
+  "#Description Attribute": {
+    "data": {
+      "id": "#Description Attribute",
+      "type": "CUSTOM_ATTRIBUTE_DEFINITION",
+      "customAttributeDefinitionData": {
+        "allowedObjectTypes": [
+          "ITEM_VARIATION"
+        ],
+        "name": "Description",
+        "type": "STRING",
+        "key": "description"
+      }
+    }
+  },
+  "#Gardeners Choice Bouquet": {
+    "image": {
+      "url": "./images/bouquets-thumbnail.jpg",
+      "id": "#Gardeners Choice Bouquet",
+      "caption": "A picture of a bouquet"
+    },
+    "data": {
+      "type": "ITEM",
+      "id": "#Gardeners Choice Bouquet",
+      "itemData": {
+        "name": "Gardeners Choice Bouquet",
+        "description": "A bouquet of seasonal flowers",
+        "categoryId": "#Flowers Category",
+        "variations": [
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Small Gardeners Choice Bouquet",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#Gardeners Choice Bouquet",
+              "name": "Small",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 2000,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "About 5 Stems"
+              }
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Medium Gardeners Choice Bouquet",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#Gardeners Choice Bouquet",
+              "name": "Medium",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 4000,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "About 10 Stems"
+              }
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Large Gardeners Choice Bouquet",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#Gardeners Choice Bouquet",
+              "name": "Large",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 4000,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "About 15 Stems"
+              }
+            }
+          }
+        ],
+        "taxIds": [
+          "#Sales Tax"
+        ]
+      }
+    }
+  },
+  "#Gardeners Choice Arrangement": {
+    "image": {
+      "url": "./images/arrangements-thumbnail.jpg",
+      "id": "#Gardeners Choice Arrangement",
+      "caption": "A picture of an arrangement"
+    },
+    "data": {
+      "type": "ITEM",
+      "id": "#Gardeners Choice Arrangement",
+      "itemData": {
+        "name": "Gardeners Choice Arrangement",
+        "description": "An arrangement of seasonal flowers",
+        "categoryId": "#Flowers Category",
+        "variations": [
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Bud Vase Gardeners Choice Arrangement",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#Gardeners Choice Arrangement",
+              "name": "Bud Vase",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 1500,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "A single stem in a bud vase"
+              }
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Centerpiece Gardeners Choice Arrangement",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#Gardeners Choice Arrangement",
+              "name": "Centerpiece",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 7000,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "Great for large tables"
+              }
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Side Table Gardeners Choice Arrangement",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#Gardeners Choice Arrangement",
+              "name": "Side Table",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 4000,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "Great for side tables"
+              }
+            }
+          }
+        ],
+        "taxIds": [
+          "#Sales Tax"
+        ]
+      }
+    }
+  },
+  "#CSA Membership": {
+    "image": {
+      "url": "./images/csa-thumbnail.jpg",
+      "id": "#CSA Membership",
+      "caption": "A picture of an arrangement"
+    },
+    "data": {
+      "type": "ITEM",
+      "id": "#CSA Membership",
+      "itemData": {
+        "name": "CSA Membership",
+        "description": "A weekly bouquet of seasonal flowers",
+        "categoryId": "#Flowers Category",
+        "variations": [
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Full Season CSA Membership",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#CSA Membership",
+              "name": "Full Season",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 15000,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "8 bouquets throughout the season"
+              }
+            }
+          },
+          {
+            "type": "ITEM_VARIATION",
+            "id": "#Sampler CSA Membership",
+            "isDeleted": false,
+            "presentAtAllLocations": true,
+            "itemVariationData": {
+              "itemId": "#CSA Membership",
+              "name": "Sampler",
+              "pricingType": "FIXED_PRICING",
+              "priceMoney": {
+                "amount": 7500,
+                "currency": "CURRENCY"
+              }
+            },
+            "customAttributeValues": {
+              "description": {
+                "key": "description",
+                "customAttributeDefinitionId": "#Description Attribute",
+                "name": "Brand",
+                "type": "STRING",
+                "stringValue": "4 bouquets throughout the season"
+              }
+            }
+          }
+        ],
+        "taxIds": [
+          "#Sales Tax"
+        ]
+      }
+    }
+  }
+}

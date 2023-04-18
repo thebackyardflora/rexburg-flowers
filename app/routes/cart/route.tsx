@@ -4,7 +4,7 @@ import { getProducts } from '~/models/product.server';
 import { getCart } from '~/session.server';
 import type { ActionArgs, LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { removeCartItem, updateCartQty } from '~/routes/cart/cart.server';
+import { cartCheckout, removeCartItem, updateCartQty } from '~/routes/cart/cart.server';
 
 export async function loader({ request }: LoaderArgs) {
   const cart = await getCart(request);
@@ -54,9 +54,7 @@ export async function action({ request }: ActionArgs) {
   } else if (request.method === 'PUT') {
     return await updateCartQty(request);
   } else if (request.method === 'POST') {
-    console.log('time to purchase');
-
-    return null;
+    return cartCheckout(request);
   } else {
     throw new Response(null, { status: 405 });
   }

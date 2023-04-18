@@ -51,9 +51,9 @@ export async function saveCartSession({
   });
 }
 
-export async function clearCartSession(request: Request) {
+export async function clearCartSession(request: Request, redirectUrl: string) {
   const session = await getSession(request);
-  return redirect('/', {
+  return redirect(redirectUrl, {
     headers: {
       'Set-Cookie': await sessionStorage.destroySession(session),
     },
