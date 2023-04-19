@@ -7,7 +7,7 @@ import invariant from 'tiny-invariant';
 export async function action({ request }: ActionArgs) {
   invariant(process.env.SQUARE_WEBHOOKS_SECRET, 'Missing SQUARE_WEBHOOKS_SECRET env var');
 
-  // HMAC-SHA1 signature
+  // HMAC-SHA-256 signature
   const signature = request.headers.get('x-square-hmacsha256-signature');
   const environment = request.headers.get('square-environment');
 

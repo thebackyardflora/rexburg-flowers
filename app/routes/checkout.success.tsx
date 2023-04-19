@@ -8,22 +8,23 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
-  const paymentId = z.string().safeParse(url.searchParams.get('payment_id'));
   const orderId = z.string().safeParse(url.searchParams.get('order_id'));
 
-  if (!paymentId.success || !orderId.success) {
+  if (!orderId.success) {
     throw redirect('/');
   }
 
   try {
-    const [products, order, payment] = await Promise.all([
-      getProducts(),
-      getOrder(orderId.data),
-      getPayment(paymentId.data),
-    ]);
+    const [products, order] = await Promise.all([getProducts(), getOrder(orderId.data)]);
 
-    if (!order || !payment) {
+    if (!order || !order.tenders?.[0].paymentId) {
       throw new Response('Unable to load order details', { status: 406 });
+    }
+
+    const payment = await getPayment(order.tenders?.[0].paymentId);
+
+    if (!payment) {
+      throw new Response('Unable to load payment details', { status: 406 });
     }
 
     const orderItems =
