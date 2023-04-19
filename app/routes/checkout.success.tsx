@@ -8,9 +8,10 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
-  const orderId = z.string().safeParse(url.searchParams.get('order_id'));
+  const orderId = z.string().safeParse(url.searchParams.get('orderId'));
 
   if (!orderId.success) {
+    console.warn('Invalid order id', orderId.error);
     throw redirect('/');
   }
 
