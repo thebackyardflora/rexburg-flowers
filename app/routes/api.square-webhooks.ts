@@ -28,7 +28,7 @@ export async function action({ request }: ActionArgs) {
   if (
     !WebhooksHelper.isValidWebhookEventSignature(body, signature, process.env.SQUARE_WEBHOOKS_SECRET, url.toString())
   ) {
-    console.error('Invalid signature', { signature, body, requestUrl: request.url });
+    console.error('Invalid signature', { signature, body, requestUrl: url.toString() });
     return new Response('Invalid signature', { status: 400 });
   }
 
