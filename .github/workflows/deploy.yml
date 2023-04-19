@@ -88,9 +88,6 @@ jobs:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
-      - uses: browser-actions/setup-chrome@v1
-      - run: chrome --version
-
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
@@ -107,8 +104,8 @@ jobs:
         with:
           useLockFile: false
 
-#      - name: Install Playwright Browsers
-#        run: npx playwright install --with-deps
+      - name: Install Playwright Browsers
+        run: npx playwright install-deps chromium # install dependencies for Chromium only
 
       - name: 🐳 Docker compose
         # the sleep is just there to give time for postgres to get started
