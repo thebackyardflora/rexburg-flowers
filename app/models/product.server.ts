@@ -17,6 +17,15 @@ export async function getProducts() {
   return products;
 }
 
+export async function refreshProducts() {
+  const items = await getLocationCatalogItems();
+  const products = await processCatalogItems(items);
+
+  await setProductsToCache(products);
+
+  return products;
+}
+
 export async function getProductById(id: string) {
   const products = await getProducts();
 
