@@ -1,9 +1,10 @@
 import { getCart, saveCartSession } from '~/session.server';
-import { getProductById } from '~/models/product.server';
+import { getProductById, getProducts } from '~/models/product.server';
 import { z } from 'zod';
 import type { Cart } from '~/routes/cart/cart.types';
 import { createCheckoutUrl } from '~/square.server';
 import { redirect } from '@remix-run/node';
+import type { OrderLineItem } from 'square';
 
 export async function removeCartItem({ request }: { request: Request }) {
   const cart = await getCart(request);
@@ -101,15 +102,58 @@ export async function cartCheckout(request: Request) {
     throw new Response(null, { status: 406 });
   }
 
+  const { cartProducts } = await getCartDetails(cart);
+
   const url = new URL(request.url);
 
   const checkoutUrl = await createCheckoutUrl(
     url.origin,
-    cart.items.map((item) => ({
-      quantity: item.quantity.toString(),
-      catalogObjectId: item.variationId,
-    }))
+    cartProducts.map(
+      (item) =>
+        ({
+          quantity: item.quantity.toString(),
+          catalogObjectId: item.variationId,
+          appliedTaxes: item.taxIds.length ? item.taxIds.map((taxId) => ({ taxUid: taxId })) : undefined,
+        } satisfies OrderLineItem)
+    ),
+    [...new Set(cartProducts.flatMap((item) => item.taxIds))]
   );
 
   return redirect(checkoutUrl);
+}
+
+export async function getCartDetails(cart: Cart) {
+  const products = await getProducts();
+  cart.items = cart.items.filter((item) =>
+    products.find((product) => product.id === item.productId && product.variants.find((v) => v.id === item.variationId))
+  );
+
+  const cartProducts = cart.items.map((item) => ({
+    ...products.find((product) => product.id === item.productId)!,
+    quantity: item.quantity,
+    variationId: item.variationId,
+  }));
+
+  const subtotal = cartProducts.reduce(
+    (acc, product) => acc + product.variants.find((v) => v.id === product.variationId)!.price * product.quantity,
+    0
+  );
+
+  const shippingEstimate = 0;
+
+  const taxEstimate = cartProducts.reduce(
+    (acc, product) =>
+      acc + product.variants.find((v) => v.id === product.variationId)!.price * product.quantity * product.taxPercent,
+    0
+  );
+
+  const orderTotal = subtotal + taxEstimate + shippingEstimate;
+
+  return {
+    cartProducts,
+    subtotal,
+    shippingEstimate,
+    taxEstimate,
+    orderTotal,
+  };
 }

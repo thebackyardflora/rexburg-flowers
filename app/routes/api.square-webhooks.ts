@@ -1,8 +1,9 @@
 import type { ActionArgs } from '@remix-run/node';
 import type { SquareEvent } from 'square';
 import { WebhooksHelper } from 'square';
-import { refreshProducts } from '~/models/product.server';
+import { refreshProductCatalogCache } from '~/models/product.server';
 import invariant from 'tiny-invariant';
+import { refreshTaxesCache } from '~/models/taxes.server';
 
 export async function action({ request }: ActionArgs) {
   invariant(process.env.SQUARE_WEBHOOKS_SECRET, 'Missing SQUARE_WEBHOOKS_SECRET env var');
@@ -36,8 +37,13 @@ export async function action({ request }: ActionArgs) {
 
   if (event.type === 'catalog.version.updated') {
     console.info('Catalog version updated, refreshing products');
-    await refreshProducts();
+    await refreshCatalogCache();
   }
 
   return new Response('OK', { status: 200 });
+}
+
+async function refreshCatalogCache() {
+  await refreshProductCatalogCache();
+  await refreshTaxesCache();
 }

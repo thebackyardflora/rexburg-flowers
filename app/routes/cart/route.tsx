@@ -1,10 +1,9 @@
 import { QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { Form, Link, useFetcher, useLoaderData } from '@remix-run/react';
-import { getProducts } from '~/models/product.server';
 import { getCart } from '~/session.server';
 import type { ActionArgs, LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { cartCheckout, removeCartItem, updateCartQty } from '~/routes/cart/cart.server';
+import { cartCheckout, getCartDetails, removeCartItem, updateCartQty } from '~/routes/cart/cart.server';
 
 export async function loader({ request }: LoaderArgs) {
   const cart = await getCart(request);
@@ -15,27 +14,7 @@ export async function loader({ request }: LoaderArgs) {
     });
   }
 
-  const products = await getProducts();
-  cart.items = cart.items.filter((item) =>
-    products.find((product) => product.id === item.productId && product.variants.find((v) => v.id === item.variationId))
-  );
-
-  const cartProducts = cart.items.map((item) => ({
-    ...products.find((product) => product.id === item.productId)!,
-    quantity: item.quantity,
-    variationId: item.variationId,
-  }));
-
-  const subtotal = cartProducts.reduce(
-    (acc, product) => acc + product.variants.find((v) => v.id === product.variationId)!.price * product.quantity,
-    0
-  );
-
-  const shippingEstimate = 0;
-
-  const taxEstimate = 0;
-
-  const orderTotal = subtotal + taxEstimate + shippingEstimate;
+  const { cartProducts, subtotal, shippingEstimate, taxEstimate, orderTotal } = await getCartDetails(cart);
 
   return json({
     cart: {
@@ -63,7 +42,8 @@ export async function action({ request }: ActionArgs) {
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
-  minimumFractionDigits: 0,
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
 });
 
 export default function ShoppingCart() {
@@ -200,18 +180,18 @@ export default function ShoppingCart() {
                   {cart ? currencyFormatter.format(cart.subtotal) : '-'}
                 </dd>
               </div>
-              <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                <dt className="flex items-center text-sm text-gray-600">
-                  <span>Shipping estimate</span>
-                  <Link to="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Learn more about how shipping is calculated</span>
-                    <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-                  </Link>
-                </dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {cart ? currencyFormatter.format(cart.shippingEstimate) : '-'}
-                </dd>
-              </div>
+              {/*<div className="flex items-center justify-between border-t border-gray-200 pt-4">*/}
+              {/*  <dt className="flex items-center text-sm text-gray-600">*/}
+              {/*    <span>Shipping estimate</span>*/}
+              {/*    <Link to="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">*/}
+              {/*      <span className="sr-only">Learn more about how shipping is calculated</span>*/}
+              {/*      <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />*/}
+              {/*    </Link>*/}
+              {/*  </dt>*/}
+              {/*  <dd className="text-sm font-medium text-gray-900">*/}
+              {/*    {cart ? currencyFormatter.format(cart.shippingEstimate) : '-'}*/}
+              {/*  </dd>*/}
+              {/*</div>*/}
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="flex text-sm text-gray-600">
                   <span>Tax estimate</span>

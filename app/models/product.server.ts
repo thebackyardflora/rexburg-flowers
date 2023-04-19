@@ -1,27 +1,31 @@
-import { redisClient } from '~/redis.server';
+import { getDataFromCache, saveDataToCache } from '~/redis.server';
 import type { CatalogItemObject } from '~/square.server';
 import { getAllImages, getLocationCatalogItems } from '~/square.server';
 import type { CatalogCustomAttributeValue } from 'square';
 import { roundToDecimal } from '~/utils';
+import type { TaxesMap } from '~/models/taxes.server';
+import { getTaxesMap } from '~/models/taxes.server';
+
+const CATALOG_ITEMS = 'catalog-items';
 
 export async function getProducts() {
-  const productsFromCache = await getProductsFromCache();
+  const productsFromCache = await getDataFromCache<Product[]>(CATALOG_ITEMS);
 
   if (process.env.NODE_ENV === 'production' && productsFromCache) return productsFromCache;
 
   const items = await getLocationCatalogItems();
   const products = await processCatalogItems(items);
 
-  await setProductsToCache(products);
+  await saveDataToCache(products, CATALOG_ITEMS);
 
   return products;
 }
 
-export async function refreshProducts() {
+export async function refreshProductCatalogCache() {
   const items = await getLocationCatalogItems();
   const products = await processCatalogItems(items);
 
-  await setProductsToCache(products);
+  await saveDataToCache(products, CATALOG_ITEMS);
 
   return products;
 }
@@ -43,18 +47,6 @@ export async function getFeaturedProducts() {
   }));
 }
 
-async function getProductsFromCache() {
-  const result = await redisClient.get('catalog-items');
-
-  if (!result) return null;
-
-  return JSON.parse(result) as Product[];
-}
-
-async function setProductsToCache(items: Product[]) {
-  await redisClient.set('catalog-items', JSON.stringify(items));
-}
-
 export type Product = {
   id: string;
   name: string;
@@ -63,6 +55,8 @@ export type Product = {
   imageAlt?: string;
   description: string;
   descriptionHtml: string;
+  taxIds: string[];
+  taxPercent: number;
   variants: {
     id: string;
     name: string;
@@ -76,6 +70,7 @@ export type Product = {
 async function processCatalogItems(items: CatalogItemObject[]) {
   const imageIds = getAllImageIds(items);
   const images = await getAllImages(imageIds);
+  const taxesMap = await getTaxesMap();
 
   const imageMap = images.reduce((map, image) => {
     if (!image.id || !image.imageData?.url) return map;
@@ -84,13 +79,17 @@ async function processCatalogItems(items: CatalogItemObject[]) {
     return map;
   }, {} as Record<string, string>);
 
-  return items.map((item) => convertCatalogItemToProduct(item, imageMap));
+  return items.map((item) => convertCatalogItemToProduct(item, imageMap, taxesMap));
 }
 
-function convertCatalogItemToProduct(item: CatalogItemObject, imageMap: Record<string, string>) {
-  const { name, imageIds, descriptionHtml, descriptionPlaintext, variations } = item.itemData;
+function convertCatalogItemToProduct(item: CatalogItemObject, imageMap: Record<string, string>, taxesMap: TaxesMap) {
+  const { name, imageIds, descriptionHtml, descriptionPlaintext, variations, taxIds } = item.itemData;
 
   const productName = name ?? 'Untitled';
+  const taxes = taxIds?.map((taxId) => taxesMap[taxId]) ?? [];
+  const totalTaxPercent = taxes.reduce((acc, tax) => {
+    return acc + tax;
+  }, 0);
 
   return {
     id: item.id,
@@ -100,6 +99,8 @@ function convertCatalogItemToProduct(item: CatalogItemObject, imageMap: Record<s
     imageAlt: productName,
     description: descriptionPlaintext ?? '',
     descriptionHtml: descriptionHtml ?? '',
+    taxPercent: totalTaxPercent,
+    taxIds: taxIds ?? [],
     variants:
       variations?.map((variation) => ({
         id: variation.id,
