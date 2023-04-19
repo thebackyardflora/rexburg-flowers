@@ -1,4 +1,4 @@
-import type { CatalogItem, OrderLineItem } from 'square';
+import type { CatalogItem, CatalogTax, OrderLineItem } from 'square';
 import { ApiError, Client, Environment } from 'square';
 import invariant from 'tiny-invariant';
 import type { CatalogObject } from 'square/src/models/catalogObject';
@@ -61,7 +61,7 @@ export async function getAllImages(ids: string[]) {
   }
 }
 
-export async function createCheckoutUrl(origin: string, lineItems: OrderLineItem[]) {
+export async function createCheckoutUrl(origin: string, lineItems: OrderLineItem[], taxIds: string[]) {
   invariant(process.env.SQUARE_LOCATION_ID, 'SQUARE_LOCATION_ID is required');
 
   try {
@@ -72,6 +72,7 @@ export async function createCheckoutUrl(origin: string, lineItems: OrderLineItem
           name: 'rexburgflowers.com',
         },
         lineItems,
+        taxes: taxIds.length ? taxIds.map((id) => ({ catalogObjectId: id, uid: id, scope: 'LINE_ITEM' })) : undefined,
       },
       checkoutOptions: {
         redirectUrl: `${origin}/checkout/callback`,
@@ -135,4 +136,32 @@ export async function getPayment(paymentId: string) {
     }
     throw new Error('Unable to fetch payment from Square');
   }
+}
+
+export async function getTaxes() {
+  try {
+    const taxes = await catalogApi.listCatalog(undefined, 'tax');
+
+    return (taxes.result.objects ?? []).filter(isCatalogTaxObject);
+  } catch (err) {
+    if (err instanceof ApiError) {
+      err.result.errors.forEach(function (e: any) {
+        console.log(e.category);
+        console.log(e.code);
+        console.log(e.detail);
+      });
+    } else {
+      console.log('Unexpected error occurred: ', err);
+    }
+    throw new Error('Unable to fetch taxes from Square');
+  }
+}
+
+export interface CatalogTaxObject extends CatalogObject {
+  type: 'TAX';
+  taxData: CatalogTax;
+}
+
+function isCatalogTaxObject(object: CatalogObject): object is CatalogTaxObject {
+  return object.type === 'TAX';
 }

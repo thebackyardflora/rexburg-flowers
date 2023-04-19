@@ -37,6 +37,8 @@ const mockProduct = {
   href: faker.internet.url(),
   description: faker.lorem.paragraph(),
   descriptionHtml: faker.lorem.paragraph(),
+  taxIds: [],
+  taxPercent: 0,
   variants: [
     {
       imageAlt: undefined,
