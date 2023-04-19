@@ -12,6 +12,7 @@ export async function action({ request }: ActionArgs) {
   const environment = request.headers.get('square-environment');
 
   if (!signature || !environment) {
+    console.error('Missing headers', { signature, environment });
     return new Response('Missing headers', { status: 400 });
   }
 
@@ -22,6 +23,7 @@ export async function action({ request }: ActionArgs) {
   const body = await request.text();
 
   if (!WebhooksHelper.isValidWebhookEventSignature(body, signature, process.env.SQUARE_WEBHOOKS_SECRET, request.url)) {
+    console.error('Invalid signature', { signature, body, requestUrl: request.url });
     return new Response('Invalid signature', { status: 400 });
   }
 
