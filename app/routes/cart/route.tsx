@@ -1,5 +1,5 @@
 import { QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid';
-import { Form, Link, useFetcher, useLoaderData } from '@remix-run/react';
+import { Form, Link, useActionData, useFetcher, useLoaderData, useNavigation } from '@remix-run/react';
 import { getCart } from '~/session.server';
 import type { ActionArgs, LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
@@ -48,9 +48,12 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 
 export default function ShoppingCart() {
   const { cart } = useLoaderData<typeof loader>();
-
+  const actionData = useActionData();
   const qtyFetcher = useFetcher();
   const deleteFetcher = useFetcher();
+  const navigation = useNavigation();
+
+  const errorMessage = actionData?.message ?? null;
 
   return (
     <div className="bg-white">
@@ -99,7 +102,12 @@ export default function ShoppingCart() {
                             </div>
                             <div className="mt-1 flex text-sm">
                               {variation.name ? (
-                                <p className="border-gray-200 text-gray-500">{variation.name}</p>
+                                <p className="border-gray-200 text-gray-500">
+                                  {variation.name}
+                                  {variation.soldOut ? (
+                                    <span className="ml-1 font-medium uppercase text-red-400">- sold out</span>
+                                  ) : null}
+                                </p>
                               ) : null}
                             </div>
                             <p className="mt-1 text-sm font-medium text-gray-900">
@@ -217,11 +225,15 @@ export default function ShoppingCart() {
                 type="submit"
                 className="w-full rounded-md border border-transparent bg-primary-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:opacity-50"
                 disabled={
-                  !cart?.products.length || qtyFetcher.state === 'submitting' || deleteFetcher.state === 'submitting'
+                  !cart?.products.length ||
+                  qtyFetcher.state === 'submitting' ||
+                  deleteFetcher.state === 'submitting' ||
+                  navigation.state === 'submitting'
                 }
               >
-                Checkout
+                {navigation.state === 'submitting' ? 'Please wait...' : 'Checkout'}
               </button>
+              {errorMessage ? <p className="mt-4 font-medium text-red-600">{errorMessage}</p> : null}
             </Form>
           </section>
         </div>

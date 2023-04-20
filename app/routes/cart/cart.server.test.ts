@@ -47,6 +47,7 @@ const mockProduct = {
       price: faker.datatype.number(),
       id: '1',
       name: faker.commerce.productName(),
+      soldOut: false,
     },
   ],
 } satisfies Product;
