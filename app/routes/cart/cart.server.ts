@@ -3,7 +3,7 @@ import { getProductById, getProducts } from '~/models/product.server';
 import { z } from 'zod';
 import type { Cart } from '~/routes/cart/cart.types';
 import { createCheckoutUrl } from '~/square.server';
-import { redirect } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
 import type { OrderLineItem } from 'square';
 
 export async function removeCartItem({ request }: { request: Request }) {
@@ -72,6 +72,10 @@ export async function addCartItem(request: Request, productId: string) {
     throw new Response(null, { status: 400 });
   }
 
+  if (variant.soldOut) {
+    throw new Response('Item variant is sold out', { status: 406 });
+  }
+
   let cart = await getCart(request);
 
   if (!cart) {
@@ -105,6 +109,10 @@ export async function cartCheckout(request: Request) {
   const { cartProducts } = await getCartDetails(cart);
 
   const url = new URL(request.url);
+
+  if (cartProducts.some((item) => item.variants.find((v) => v.id === item.variationId)?.soldOut)) {
+    return json({ message: 'One or more items in your cart are sold out' }, { status: 406 });
+  }
 
   const checkoutUrl = await createCheckoutUrl(
     url.origin,

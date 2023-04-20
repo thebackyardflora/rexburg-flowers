@@ -64,6 +64,7 @@ export type Product = {
     imageSrc: string | null;
     imageAlt?: string;
     price: number;
+    soldOut: boolean;
   }[];
 };
 
@@ -109,6 +110,7 @@ function convertCatalogItemToProduct(item: CatalogItemObject, imageMap: Record<s
         imageSrc: getImageUrl(variation.itemVariationData?.imageIds?.[0], imageMap),
         imageAlt: variation.itemVariationData?.name ?? undefined,
         price: roundToDecimal((Number(variation.itemVariationData?.priceMoney?.amount) ?? 0) / 100, 2),
+        soldOut: Boolean(variation.itemVariationData?.locationOverrides?.some((override) => override.soldOut)),
       })) ?? [],
   } satisfies Product;
 }

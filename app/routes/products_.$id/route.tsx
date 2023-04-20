@@ -36,7 +36,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 
 export default function FlowerProductPage() {
   const { product } = useLoaderData<typeof loader>();
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const [selectedVariant, setSelectedVariant] = useState(product.variants.find((variant) => !variant.soldOut) ?? null);
 
   const breadcrumbs = [
     { id: 1, name: 'Products', href: '/products' },
@@ -44,7 +44,7 @@ export default function FlowerProductPage() {
   ];
 
   useEffect(() => {
-    setSelectedVariant(product.variants[0]);
+    setSelectedVariant(product.variants.find((variant) => !variant.soldOut) ?? null);
   }, [product]);
 
   return (
@@ -84,7 +84,7 @@ export default function FlowerProductPage() {
         {/* Product image */}
         <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
           <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
-            {selectedVariant.imageSrc ? (
+            {selectedVariant?.imageSrc ? (
               <img
                 src={selectedVariant.imageSrc}
                 alt={selectedVariant.imageAlt}
@@ -114,6 +114,7 @@ export default function FlowerProductPage() {
                         as="div"
                         key={variant.name}
                         value={variant}
+                        disabled={variant.soldOut}
                         className={({ active }) =>
                           classNames(
                             active ? 'ring-2 ring-primary-500' : '',
@@ -128,6 +129,11 @@ export default function FlowerProductPage() {
                             </RadioGroup.Label>
                             <RadioGroup.Description as="p" className="mt-1 text-sm text-gray-500">
                               {variant.description}
+                              {variant.soldOut ? (
+                                <span className="font-bold uppercase text-red-400"> - Sold Out</span>
+                              ) : (
+                                ''
+                              )}
                             </RadioGroup.Description>
                             <div
                               className={classNames(
@@ -147,7 +153,8 @@ export default function FlowerProductPage() {
               <div className="mt-10">
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-8 py-3 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-8 py-3 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:bg-primary-500 disabled:opacity-50"
+                  disabled={!selectedVariant || selectedVariant?.soldOut}
                 >
                   Add to cart
                 </button>
