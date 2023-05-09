@@ -6,10 +6,18 @@
   "automerge": true,
   "automergeType": "pr",
   "platformAutomerge": true,
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["node"],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
       "versioning": "node"
     }
   ]
