@@ -34,8 +34,7 @@ export function HeroSection() {
                   Rexburg Grown, <br /> Never Flown
                 </h1>
                 <p className="mt-4 text-xl text-gray-600">
-                  All the charts, datepickers, and notifications in the world can't beat checking off some items on a
-                  paper card.
+                  Locally grown flowers are fresher, more sustainable, and support your local economy.
                 </p>
                 <div className="mt-6">
                   <Link

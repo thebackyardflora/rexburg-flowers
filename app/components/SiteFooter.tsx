@@ -12,7 +12,7 @@ export function SiteFooter() {
       href: `/products/${product.id}`,
     })),
     company: [
-      { name: 'Who we are', href: '#' },
+      { name: 'About Us', href: '#' },
       { name: 'No-till farming', href: '#' },
       { name: 'Contact', href: '#' },
     ],
@@ -82,7 +82,7 @@ export function SiteFooter() {
             {/* Newsletter section */}
             <div className="mt-12 md:col-span-8 md:col-start-3 md:row-start-2 md:mt-0 lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <h3 className="text-sm font-medium text-gray-900">Sign up for our newsletter</h3>
-              <p className="mt-6 text-sm text-gray-500">The latest deals and savings, sent to your inbox weekly.</p>
+              <p className="mt-6 text-sm text-gray-500">Get the latest from The Backyard Flora.</p>
               {emailListFetcher.data?.success ? (
                 <div className="mt-2 flex items-center justify-center rounded-md bg-primary-50 p-2 text-center text-sm font-medium text-primary-600 sm:max-w-md">
                   <span>Thank you for subscribing! Check your email to confirm your subscription.</span>

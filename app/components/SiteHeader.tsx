@@ -6,11 +6,8 @@ import { Fragment, useState } from 'react';
 import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useRootLoaderData } from '~/root';
 
-const navigation = {
-  pages: [
-    { name: 'DIY Weddings', href: '#' },
-    { name: 'The Flower Cart', href: '#' },
-  ],
+const navigation: { pages: { name: string; href: string }[] } = {
+  pages: [],
 };
 
 export function SiteHeader() {
@@ -86,7 +83,11 @@ export function SiteHeader() {
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   {navigation.pages.map((page) => (
                     <div key={page.name} className="flow-root">
-                      <Link to={page.href} className="-m-2 block p-2 font-medium text-gray-900">
+                      <Link
+                        to={page.href}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                        onClick={handleLinkClick}
+                      >
                         {page.name}
                       </Link>
                     </div>
@@ -113,6 +114,10 @@ export function SiteHeader() {
                 {/* Flyout menus */}
                 <Popover.Group className="inset-x-0 bottom-0 px-4">
                   <div className="flex h-full justify-center space-x-8">
+                    <Link to={'/'} className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                      Home
+                    </Link>
+
                     <Popover className="flex">
                       {({ open, close }) => (
                         <>
