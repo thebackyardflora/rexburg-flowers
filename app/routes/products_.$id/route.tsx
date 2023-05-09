@@ -176,9 +176,13 @@ export default function FlowerProductPage() {
             <h2 className="text-sm font-medium text-gray-900">Flower Care</h2>
 
             <div className="prose prose-sm mt-4 text-gray-500">
+              <p>Want to keep your flowers fresh longer? Follow these simple steps:</p>
               <ul>
                 <li>When you get them home, give them a fresh cut</li>
                 <li>Replace the water daily</li>
+                <li>Keep away from fruit and direct sunlight</li>
+                <li>Place in fridge overnight</li>
+                <li>Homemade flower food: 1/8 tsp sugar, 1 drop of bleach</li>
               </ul>
             </div>
           </div>
