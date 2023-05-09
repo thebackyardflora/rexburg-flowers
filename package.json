@@ -38,7 +38,7 @@
   ],
   "dependencies": {
     "@headlessui/react": "1.7.14",
-    "@heroicons/react": "2.0.17",
+    "@heroicons/react": "2.0.18",
     "@isaacs/express-prometheus-middleware": "1.2.1",
     "@mailchimp/mailchimp_marketing": "3.0.80",
     "@prisma/client": "4.14.0",
