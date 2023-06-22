@@ -41,7 +41,7 @@
     "@heroicons/react": "2.0.18",
     "@isaacs/express-prometheus-middleware": "1.2.1",
     "@mailchimp/mailchimp_marketing": "3.0.80",
-    "@prisma/client": "4.16.0",
+    "@prisma/client": "4.16.1",
     "@remix-run/express": "1.17.1",
     "@remix-run/node": "1.17.1",
     "@remix-run/react": "1.17.1",
