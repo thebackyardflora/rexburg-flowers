@@ -96,7 +96,7 @@
     "eslint": "8.44.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-playwright": "0.15.3",
-    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-prettier": "5.0.0",
     "happy-dom": "10.3.1",
     "msw": "1.2.2",
     "nock": "13.3.1",
