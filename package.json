@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@playwright/test": "1.36.1",
+    "@playwright/test": "1.36.2",
     "@remix-run/dev": "1.17.1",
     "@remix-run/eslint-config": "1.17.1",
     "@tailwindcss/aspect-ratio": "0.4.2",
