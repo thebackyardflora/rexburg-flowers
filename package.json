@@ -92,7 +92,7 @@
     "cookie": "0.5.0",
     "dotenv": "16.3.1",
     "esbuild": "0.19.3",
-    "esbuild-register": "3.4.2",
+    "esbuild-register": "3.5.0",
     "eslint": "8.49.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-playwright": "0.16.0",
