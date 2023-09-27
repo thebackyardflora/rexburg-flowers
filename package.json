@@ -77,7 +77,7 @@
     "@types/compression": "1.7.3",
     "@types/eslint": "8.44.3",
     "@types/express": "4.17.18",
-    "@types/mailchimp__mailchimp_marketing": "3.0.12",
+    "@types/mailchimp__mailchimp_marketing": "3.0.13",
     "@types/morgan": "1.9.5",
     "@types/node": "18.18.0",
     "@types/react": "18.2.23",
